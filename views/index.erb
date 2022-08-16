@@ -11,7 +11,7 @@
 
   <h1 class="mb-5">pocketdrop</h1>
 
-  <div class="mb-5 bg-light">
+  <div class="mb-5 bg-info bg-opacity-25">
     <h5 class="p-5">drop links here (or anywhere on the page, actually)</h5>
   </div>
 
@@ -25,13 +25,11 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('dragover', () => {
-      document.getElementById('dropzone').classList.add('bg-opacity-50')
-      document.body.classList.add('bg-success', 'bg-opacity-25')
+      document.body.classList.add('bg-info', 'bg-opacity-25')
     })
 
     document.body.addEventListener('dragleave', () => {
-      document.getElementById('dropzone').classList.remove('bg-opacity-50')
-      document.body.classList.remove('bg-success', 'bg-opacity-25')
+      document.body.classList.remove('bg-info', 'bg-opacity-25')
     })
 
     document.body.addEventListener('dragenter', event => event.preventDefault())
@@ -49,7 +47,7 @@
       window.location.replace(`/?url=${url}`)
     })
 
-    document.getElementById('input').addEventListener('paste', event => {
+    document.addEventListener('paste', event => {
       const url = (event.clipboardData || window.clipboardData).getData('text')
       window.location.replace(`/?url=${url}`)
     })
