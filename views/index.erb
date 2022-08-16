@@ -1,0 +1,57 @@
+<div class="container mx-auto p-5 vh-100">
+  <% if @message %>
+    <div class="alert alert-primary" role="alert">
+      <%= @message %>
+    </div>
+  <% elsif @error %>
+    <div class="alert alert-danger" role="alert">
+      <%= @error %>
+    </div>
+  <% end %>
+
+  <h1 class="mb-5">pocketdrop</h1>
+
+  <div class="mb-5 bg-light">
+    <h5 class="p-5">drop links here (or anywhere on the page, actually)</h5>
+  </div>
+
+  <div>
+    <input id="input" type="text" placeholder="or paste links here" class="p-2 w-100 bg-transparent">
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  window.history.replaceState({}, document.title, '/')
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('dragover', () => {
+      document.getElementById('dropzone').classList.add('bg-opacity-50')
+      document.body.classList.add('bg-success', 'bg-opacity-25')
+    })
+
+    document.body.addEventListener('dragleave', () => {
+      document.getElementById('dropzone').classList.remove('bg-opacity-50')
+      document.body.classList.remove('bg-success', 'bg-opacity-25')
+    })
+
+    document.body.addEventListener('dragenter', event => event.preventDefault())
+    document.body.addEventListener('dragover', event => {
+      event.preventDefault()
+      event.dataTransfer.effectAllowed = 'link'
+    })
+
+    document.body.addEventListener('drop', event => {
+      event.preventDefault()
+      console.log('drop', event)
+      console.log(event.dataTransfer.getData('text'))
+
+      const url = event.dataTransfer.getData('text')
+      window.location.replace(`/?url=${url}`)
+    })
+
+    document.getElementById('input').addEventListener('paste', event => {
+      const url = (event.clipboardData || window.clipboardData).getData('text')
+      window.location.replace(`/?url=${url}`)
+    })
+  })
+</script>
